@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::create('orders', function (Blueprint $table) {
             $table->id();
-            $table->string('name');
+            $table->integer('number');
             $table->string('email')->unique();
             $table->decimal('amount', 10, 2);
             $table->enum('status', ['archived', 'paid', 'unpaid', 'refunded', 'failed'])->default('unpaid');
