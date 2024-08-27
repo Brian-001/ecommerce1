@@ -10,3 +10,4 @@ Route::get('/', function () {
 
 Route::get('counter', Counter::class);
 Route::get('/store/{store}/orders', Page::class);
+Route::get('/orders', Page::class);

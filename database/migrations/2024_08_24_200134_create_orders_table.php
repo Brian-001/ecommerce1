@@ -1,5 +1,6 @@
 <?php
 
+use App\Enums\Status;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
@@ -16,7 +17,7 @@ return new class extends Migration
             $table->integer('number');
             $table->string('email')->unique();
             $table->decimal('amount', 10, 2);
-            $table->enum('status', ['archived', 'paid', 'unpaid', 'refunded', 'failed'])->default('unpaid');
+            $table->string('status')->default(Status::UNPAID->value);
             $table->unsignedBigInteger('product_id');
             $table->foreign('product_id')->references('id')->on('products')->onDelete('cascade');
             $table->unsignedBigInteger('store_id');

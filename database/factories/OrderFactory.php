@@ -2,6 +2,7 @@
 
 namespace Database\Factories;
 
+use App\Enums\Status;
 use App\Models\Order;
 use App\Models\Product;
 use App\Models\Store;
@@ -25,7 +26,13 @@ class OrderFactory extends Factory
             'number' => $this->faker->unique()->numerify('ORD-#####'),
             'email' => $this->faker->safeEmail(),
             'amount' => $this->faker->randomFloat(2, 10, 100), // Random amount between 10 and 100
-            'status' => $this->faker->randomElement(['archived', 'paid', 'refunded', 'failed', 'unpaid']),
+            'status' => $this->faker->randomElement([
+                Status::ARCHIVED->value,
+                Status::PAID->value,
+                Status::REFUNDED->value,
+                Status::FAILED->value,
+                Status::UNPAID->value,
+            ]),//Use enum values in Status Enum
             'ordered_at' => $this->faker->dateTimeBetween('-1 month', 'now'),
             'product_id' => Product::factory(), //Associate with existing Products
             'store_id' => Store::factory(), //Associate with existing Stores

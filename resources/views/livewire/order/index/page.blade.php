@@ -1,6 +1,6 @@
 
 <div class="flex justify-center align-center">
-    <table class=" table-fixed divide-y divide-gray-300 text-gray-800 mx-auto">
+    <table class=" table-fixed divide-y divide-gray-300 mx-auto">
         <thead>
             <tr >
                 <th class="p-2 text-left text-sm font-semibold text-gray-900">
@@ -37,9 +37,27 @@
                         </td>
 
                         <td class="whitespace-nowrap text-sm">
-                            <div class="rounded-full py-0 5 pl-2 pr-1 inline-flex font-medium items-center text-green-500">
-                                <div>{{$order->status}}</div>
-                                <x-ei-check class="w-5 h-5"/>
+                            <div class="rounded-full py-0 px-2 inline-flex font-medium items-center 
+                                @if ($order->status->label() === 'Paid') bg-green-500 text-white 
+                                @elseif ($order->status->label() === 'Unpaid') bg-yellow-500 text-white 
+                                @elseif ($order->status->label() === 'Refunded') bg-blue-500 text-white 
+                                @elseif ($order->status->label() === 'Failed') bg-red-500 text-white 
+                                @elseif ($order->status->label() === 'Archived') bg-gray-500 text-white 
+                                @endif">
+                                
+                                <div>{{ $order->status->label() }}</div>
+                                
+                                @if ($order->status->label() === 'Paid')
+                                    <x-heroicon-o-check class="h-5 w-5 text-white" />
+                                @elseif ($order->status->label() === 'Unpaid')
+                                    <x-heroicon-o-clock class="h-5 w-5 text-white" />
+                                @elseif ($order->status->label() === 'Refunded')
+                                    <x-heroicon-o-arrow-uturn-left class="h-5 w-5 text-white" />
+                                @elseif ($order->status->label() === 'Failed')
+                                    <x-heroicon-o-x-circle class="h-5 w-5 text-white" />
+                                @elseif ($order->status->label() === 'Archived')
+                                    <x-heroicon-o-x-circle class="h-5 w-5 text-white" />
+                                @endif
                             </div>
                         </td>
 
@@ -52,11 +70,11 @@
                             </div>
                         </td>
 
-                        <td class="whitespace-nowrap text-sm p-2">
+                        <td class="whitespace-nowrap text-sm p-2 ">
                             {{$order->ordered_at}}
                         </td>
 
-                        <td class="w-auto whitespace-nowrap text-sm text-gray-800 font-semibold p-2">
+                        <td class="w-auto whitespace-nowrap text-sm p-2">
                             {{$order->amount}}
                         </td>
                     </tr>
