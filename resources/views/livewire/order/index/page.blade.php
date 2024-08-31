@@ -75,7 +75,7 @@
                         </td>
 
                         <td class="w-auto whitespace-nowrap text-sm p-2">
-                            {{$order->amount}}
+                            {{number_format($order->amount, 2)}}
                             {{-- Number::currency() --}}
                         </td>
                     </tr>
@@ -83,11 +83,12 @@
             @endif
         </tbody>
     </table>
-    <div class="mt-4 flex justify-center">
-        <div> Results: 50</div> 
-        <div>{{ $orders->links() }}</div>
-        
-        {{-- <div>{{ $orders->links('livewire.order.index.pagination') }}</div> --}}
+    <div class="mt-4 flex items-center justify-center">
+        <div class="mr-4"> Results: {{ number_format($orders->total()) }}</div> 
+        {{-- Default Pagination --}}
+        {{-- <div>{{ $orders->links() }}</div> --}}
+        {{-- Custom Pagination --}}
+        <div class="">{{ $orders->links('livewire.order.index.pagination') }}</div>
         {{-- <div>{{$orders->total()}}</div> --}}
     </div>
 </div>
