@@ -1,89 +1,101 @@
 
 <div class="flex flex-col justify-center align-center">
-    <table class=" table-fixed divide-y divide-gray-300 mx-auto">
-        <thead>
-            <tr>
-                <th class="p-2 text-left text-sm font-semibold text-gray-900">
-                    <div>Order #</div>
-                </th>
-                <th class="p-2 text-left text-sm font-semibold text-gray-900">
-                    <div>Status</div>
-                </th>
-                <th class="p-2 text-left text-sm font-semibold text-gray-900">
-                    <div>Customer</div>
-                </th>
-                <th class="p-2 text-left text-sm font-semibold text-gray-900">
-                    <div>Date</div>
-                </th>
-                <th class="p-2 text-left text-sm font-semibold text-gray-900">
-                    <div>Amount</div>
-                </th>
-            </tr>
-        </thead>
-        
-        <tbody class="divide-y divide-gray-200 bg-white text-gray-800">
-            @if ($orders->isEmpty())
+    <div class="relative">
+        <table class=" table-fixed divide-y divide-gray-300 mx-auto">
+            <thead>
                 <tr>
-                    <td colspan="5" class="text-center p-2">No orders found.</td>
+                    <th class="p-2 text-left text-sm font-semibold text-gray-900">
+                        <div>Order #</div>
+                    </th>
+                    <th class="p-2 text-left text-sm font-semibold text-gray-900">
+                        <div>Status</div>
+                    </th>
+                    <th class="p-2 text-left text-sm font-semibold text-gray-900">
+                        <div>Customer</div>
+                    </th>
+                    <th class="p-2 text-left text-sm font-semibold text-gray-900">
+                        <div>Date</div>
+                    </th>
+                    <th class="p-2 text-left text-sm font-semibold text-gray-900">
+                        <div>Amount</div>
+                    </th>
                 </tr>
-            @else
-                @foreach ($orders as $order)
-                    <tr wire:key="{{$order->id}}">
-                        <td class="whitespace-nowrap text-sm">
-                            <div class="flex p-2">
-                                <span class="text-gray-800">#</span>
-                                {{$order->number}}
-                            </div>
-                        </td>
-
-                        <td class="whitespace-nowrap text-sm">
-                            <div class="rounded-full py-0 px-2 inline-flex font-medium items-center 
-                                @if ($order->status->label() === 'Paid') bg-green-500 text-white 
-                                @elseif ($order->status->label() === 'Unpaid') bg-yellow-500 text-white 
-                                @elseif ($order->status->label() === 'Refunded') bg-blue-500 text-white 
-                                @elseif ($order->status->label() === 'Failed') bg-red-500 text-white 
-                                @elseif ($order->status->label() === 'Archived') bg-gray-500 text-white 
-                                @endif">
-                                
-                                <div>{{ $order->status->label() }}</div>
-                                
-                                @if ($order->status->label() === 'Paid')
-                                    <x-icon.check-circle class="h-5 w-5 text-white" />
-                                @elseif ($order->status->label() === 'Unpaid')
-                                    <x-icon.clock class="h-5 w-5 text-white" />
-                                @elseif ($order->status->label() === 'Refunded')
-                                    <x-icon.arrow-uturn-left class="h-5 w-5 text-white" />
-                                @elseif ($order->status->label() === 'Failed')
-                                    <x-icon.x-circle class="h-5 w-5 text-white" />
-                                @elseif ($order->status->label() === 'Archived')
-                                    <x-icon.archive-box class="h-5 w-5 text-white" />
-                                @endif
-                            </div>
-                        </td>
-
-                        <td class="whitespace-nowrap text-sm">
-                            <div class="flex items-center p-2">
-                                <div class="w-5 h-5 rounded-full overflow-hidden">
-                                    <img src="/images/avatar1.jpg" alt="client_avatar">
-                                </div>
-                                <div>{{$order->email}}</div>
-                            </div>
-                        </td>
-
-                        <td class="whitespace-nowrap text-sm p-2 ">
-                            {{$order->ordered_at}}
-                        </td>
-
-                        <td class="w-auto whitespace-nowrap text-sm p-2">
-                            {{number_format($order->amount, 2)}}
-                            {{-- Number::currency() --}}
-                        </td>
+            </thead>
+            
+            <tbody class="divide-y divide-gray-200 bg-white text-gray-800">
+                @if ($orders->isEmpty())
+                    <tr>
+                        <td colspan="5" class="text-center p-2">No orders found.</td>
                     </tr>
-                @endforeach
-            @endif
-        </tbody>
-    </table>
-    <div class="mt-4 flex items-center justify-center">
+                @else
+                    @foreach ($orders as $order)
+                        <tr wire:key="{{$order->id}}">
+                            <td class="whitespace-nowrap text-sm p-2">
+                                <div class="flex p-2">
+                                    <span class="text-gray-800">#</span>
+                                    {{$order->number}}
+                                </div>
+                            </td>
+    
+                            <td class="whitespace-nowrap text-sm p-2">
+                                <div class="rounded-full py-0 px-2 inline-flex font-medium items-center 
+                                    @if ($order->status->label() === 'Paid') bg-green-500 text-white 
+                                    @elseif ($order->status->label() === 'Unpaid') bg-yellow-500 text-white 
+                                    @elseif ($order->status->label() === 'Refunded') bg-blue-500 text-white 
+                                    @elseif ($order->status->label() === 'Failed') bg-red-500 text-white 
+                                    @elseif ($order->status->label() === 'Archived') bg-gray-500 text-white 
+                                    @endif">
+                                    
+                                    <div>{{ $order->status->label() }}</div>
+                                    
+                                    @if ($order->status->label() === 'Paid')
+                                        <x-icon.check-circle class="h-5 w-5 text-white" />
+                                    @elseif ($order->status->label() === 'Unpaid')
+                                        <x-icon.clock class="h-5 w-5 text-white" />
+                                    @elseif ($order->status->label() === 'Refunded')
+                                        <x-icon.arrow-uturn-left class="h-5 w-5 text-white" />
+                                    @elseif ($order->status->label() === 'Failed')
+                                        <x-icon.x-circle class="h-5 w-5 text-white" />
+                                    @elseif ($order->status->label() === 'Archived')
+                                        <x-icon.archive-box class="h-5 w-5 text-white" />
+                                    @endif
+                                </div>
+                            </td>
+    
+                            <td class="whitespace-nowrap text-sm p-2">
+                                <div class="flex items-center p-2">
+                                    <div class="w-5 h-5 rounded-full overflow-hidden">
+                                        <img src="/images/avatar1.jpg" alt="client_avatar">
+                                    </div>
+                                    <div>{{$order->email}}</div>
+                                </div>
+                            </td>
+    
+                            <td class="whitespace-nowrap text-sm p-2 ">
+                                {{$order->ordered_at}}
+                            </td>
+    
+                            <td class="w-auto whitespace-nowrap text-sm p-2">
+                                {{number_format($order->amount, 2)}}
+                                {{-- Number::currency() --}}
+                            </td>
+                        </tr>
+                    @endforeach
+                @endif
+            </tbody>
+        </table>
+        {{-- Adding a layer on top of the table for loading --}}
+        <div wire:loading class="absolute inset-0 bg-white opacity-50">
+
+        </div>
+
+        {{-- Adding a spinner to our table --}}
+        <div wire:loading.flex class="flex items-center justify-center absolute inset-0">
+            <x-icon.spinner class="w-8 h-8 text-gray-500"/>
+        </div>
+    </div>
+    
+    <div class="mt-4 flex items-center justify-center w-full">
         <div class="mr-4"> Results: {{ number_format($orders->total()) }}</div> 
         {{-- Default Pagination --}}
         {{-- <div>{{ $orders->links() }}</div> --}}
