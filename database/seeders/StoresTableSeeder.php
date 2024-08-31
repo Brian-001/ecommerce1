@@ -25,7 +25,7 @@ class StoresTableSeeder extends Seeder
             return;
         }
         //Create 5 stores associating them with existing users
-        foreach($users->take(5) as $user)
+        foreach($users->take(50) as $user)
         {
             Store::factory()->create(['user_id' => $user->id]);
         }

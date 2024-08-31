@@ -9,5 +9,6 @@ Route::get('/', function () {
 });
 
 Route::get('counter', Counter::class);
-Route::get('/store/{store}/orders', Page::class);
-Route::get('/orders', Page::class);
+Route::get('/store/{storeId}/orders', Page::class)->name('store.orders');
+Route::get('/orders', Page::class)->name('orders');
+// Route::get('/orders', Page::class)->name('orders')->middleware('can:view,store');

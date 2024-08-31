@@ -2,10 +2,11 @@
 
 namespace App\Models;
 
+use Carbon\Carbon;
+use App\Enums\Status;
 use App\Models\Store;
 use App\Models\Product;
-use App\Enums\Status;
-use Carbon\Carbon;
+use Illuminate\Support\Number;
 use Illuminate\Database\Eloquent\Model;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 
@@ -26,7 +27,10 @@ class Order extends Model
     {
         return Status::from($value);
     }
-
+    public function amountForHumans()
+    {
+        return Number::currency($this->amount);
+    }
     //Eloquent Relationships
     public function product()
     {

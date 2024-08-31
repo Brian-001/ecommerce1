@@ -1,8 +1,8 @@
 
-<div class="flex justify-center align-center">
+<div class="flex flex-col justify-center align-center">
     <table class=" table-fixed divide-y divide-gray-300 mx-auto">
         <thead>
-            <tr >
+            <tr>
                 <th class="p-2 text-left text-sm font-semibold text-gray-900">
                     <div>Order #</div>
                 </th>
@@ -48,15 +48,15 @@
                                 <div>{{ $order->status->label() }}</div>
                                 
                                 @if ($order->status->label() === 'Paid')
-                                    <x-heroicon-o-check class="h-5 w-5 text-white" />
+                                    <x-icon.check-circle class="h-5 w-5 text-white" />
                                 @elseif ($order->status->label() === 'Unpaid')
-                                    <x-heroicon-o-clock class="h-5 w-5 text-white" />
+                                    <x-icon.clock class="h-5 w-5 text-white" />
                                 @elseif ($order->status->label() === 'Refunded')
-                                    <x-heroicon-o-arrow-uturn-left class="h-5 w-5 text-white" />
+                                    <x-icon.arrow-uturn-left class="h-5 w-5 text-white" />
                                 @elseif ($order->status->label() === 'Failed')
-                                    <x-heroicon-o-x-circle class="h-5 w-5 text-white" />
+                                    <x-icon.x-circle class="h-5 w-5 text-white" />
                                 @elseif ($order->status->label() === 'Archived')
-                                    <x-heroicon-o-x-circle class="h-5 w-5 text-white" />
+                                    <x-icon.archive-box class="h-5 w-5 text-white" />
                                 @endif
                             </div>
                         </td>
@@ -76,10 +76,18 @@
 
                         <td class="w-auto whitespace-nowrap text-sm p-2">
                             {{$order->amount}}
+                            {{-- Number::currency() --}}
                         </td>
                     </tr>
                 @endforeach
             @endif
         </tbody>
     </table>
+    <div class="mt-4 flex justify-center">
+        <div> Results: 50</div> 
+        <div>{{ $orders->links() }}</div>
+        
+        {{-- <div>{{ $orders->links('livewire.order.index.pagination') }}</div> --}}
+        {{-- <div>{{$orders->total()}}</div> --}}
+    </div>
 </div>

@@ -17,6 +17,7 @@
     <body class="font-sans antialiased">
 
         {{ $slot }}
+        {{-- @yield('content') --}}
 
         @livewireScripts
         
