@@ -12,13 +12,15 @@ use function Livewire\store;
 class Page extends Component
 {
     use WithPagination;
-    
+
     public $storeId;
-        
+    public $search = ''; 
+    
     public function mount($storeId = null) //Accept store as a parameter
     {
         $this->storeId = $storeId;
     }
+
     public function render()
     {
         if ($this->storeId) {
