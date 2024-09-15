@@ -20,22 +20,36 @@ class Page extends Component
     {
         $this->storeId = $storeId;
     }
-
+    public function updatedSearch()
+    {
+        // Reset pagination to the first page when search changes
+        $this->resetPage();
+    }
+    protected function applySearch($query)
+    {
+        if($this->search)
+        {
+            $query->where(function($q){
+                $q->where('number', 'like', '%' . $this->search . '%')
+                ->orWhere('email', 'like', '%' . $this->search . '%')
+                ->orWhere('status', 'like', '%' .$this->search . '%');
+            });
+        }
+    }
     public function render()
     {
-        if ($this->storeId) {
-            $store = Store::find($this->storeId);
-            if ($store) {
-                $orders = $store->orders()->paginate(10); // Paginate orders for the store
-            } else {
-                $orders = collect(); // Initialize to an empty collection if store not found
-            }
-        } else {
-            $orders = Order::paginate(10); // Paginate all orders
-        }
+        //Start with orders query
+        $query = $this->storeId ? Store::find($this->storeId)->orders() : Order::query();
+
+        //Apply search filters if any
+        $this->applySearch($query);
+
+        //Paginate the results
+        $orders = $query->paginate(10);
         
         return view('livewire.order.index.page', [
-            'orders' => $orders, // Pass the orders to the view
+            // Pass the orders to the view
+            'orders' => $orders, 
         ]);
     }
     

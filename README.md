@@ -50,3 +50,24 @@ In your blade view you can now access ordered_at
 ```
 The output of the above should be in the following format:
 `day month, and Year` for instance: `26 August, 2024`
+
+
+## Pagination and Search
+When you apply search filter, the results are filtered based on the criteria you specified
+`applySearch()` if the filtered results are not on the current page they won't see them even
+if they exist in the next page.
+
+If you are on the last page and the results do not fall within the limits, you will not find them.
+
+### Solution
+`Reset pagination on search` This listens for changes to the search input and reset the pagination.
+
+This can be accomplished by adding a method that resets a page number when the search term changes.
+
+```php
+public function updatedSearch()
+{
+    //Resets pagination to the first page when search changes
+    $this->resetPage();
+}
+```
