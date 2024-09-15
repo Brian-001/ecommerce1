@@ -33,7 +33,7 @@ class Page extends Component
         } else {
             $orders = Order::paginate(10); // Paginate all orders
         }
-
+        
         return view('livewire.order.index.page', [
             'orders' => $orders, // Pass the orders to the view
         ]);

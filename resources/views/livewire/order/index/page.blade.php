@@ -5,7 +5,7 @@
         <div class="absolute pl-2 left-0 top-0 bottom-0 flex items-center justify-center">
             <x-icon.magnifying-glass class="w-4 h-4 text-gray-800" />
         </div>
-        <input wire:model.live="search" type="text" placeholder="Search email or order..." class="pl-8 p-2 border rounded-md w-1/2" />
+        <input wire:model.live="search" type="text" placeholder="Search email or order #..." class="pl-8 p-2 border rounded-md w-1/2" />
     </div>
 
     <div class="flex flex-col justify-center align-center">

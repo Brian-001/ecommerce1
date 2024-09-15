@@ -15,9 +15,11 @@
         @livewireStyles
     </head>
     <body class="font-sans antialiased">
-
-        {{ $slot }}
-        {{-- @yield('content') --}}
+        <main>
+            <div>
+                {{ $slot }}
+            </div>
+        </main>        
 
         @livewireScripts
         
