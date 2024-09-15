@@ -15,7 +15,7 @@
                 <thead>
                     <tr>
                         <th class="p-2 text-left text-sm font-semibold text-gray-900">
-                            <div>Order #</div>
+                            <div wire:click="sortBy('number')">Order #</div>
                         </th>
                         <th class="p-2 text-left text-sm font-semibold text-gray-900">
                             <div>Status</div>
