@@ -15,19 +15,27 @@
                 <thead>
                     <tr>
                         <th class="p-2 text-left text-sm font-semibold text-gray-900">
-                            <div wire:click="sortBy('number')">Order #</div>
+                            <x-orders.index.sortable column="number" :$sortCol :$sortAsc>
+                                <div>Order #</div>
+                            </x-orders.index.sortable>
                         </th>
                         <th class="p-2 text-left text-sm font-semibold text-gray-900">
-                            <div>Status</div>
+                            <x-orders.index.sortable column="status" :$sortCol :$sortAsc>
+                                <div>Status</div>
+                            </x-orders.index.sortable>
                         </th>
                         <th class="p-2 text-left text-sm font-semibold text-gray-900">
                             <div>Customer</div>
                         </th>
                         <th class="p-2 text-left text-sm font-semibold text-gray-900">
-                            <div>Date</div>
+                            <x-orders.index.sortable column="date" :$sortCol :$sortAsc>
+                                <div>Date</div>
+                            </x-orders.index.sortable> 
                         </th>
-                        <th class="p-2 text-left text-sm font-semibold text-gray-900">
-                            <div>Amount</div>
+                        <th class="p-3 text-left text-sm font-semibold text-gray-900">
+                            <x-orders.index.sortable column="amount" :$sortCol :$sortAsc class="flex-row-reverse">
+                                <div>Amount</div>
+                            </x-orders.index.sortable>
                         </th>
                     </tr>
                 </thead>
