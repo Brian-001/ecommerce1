@@ -91,6 +91,7 @@ class Page extends Component
         //Paginate the results
         $orders = $query->paginate(10);
         
+        
         return view('livewire.order.index.page', [
             // Pass the orders to the view
             'orders' => $orders, 

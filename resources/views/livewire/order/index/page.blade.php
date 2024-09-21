@@ -37,13 +37,19 @@
                                 <div>Amount</div>
                             </x-orders.index.sortable>
                         </th>
+                        <th>
+                            {{-- Drop-down menu --}}
+
+                        </th>
                     </tr>
                 </thead>
                 
                 <tbody class="divide-y divide-gray-200 bg-white text-gray-800">
                     @if ($orders->isEmpty())
                         <tr>
-                            <td colspan="5" class="text-center p-2">No orders found.</td>
+                            <td colspan="5" class="text-center p-2">
+                                No orders found 😢.
+                            </td>
                         </tr>
                     @else
                         @foreach ($orders as $order)
@@ -89,9 +95,38 @@
                                 <td class="whitespace-nowrap text-sm p-2 ">
                                     {{$order->ordered_at}}
                                 </td>
-                                <td class="w-auto whitespace-nowrap text-sm p-2">
+                                <td class="flex items-center justify-center whitespace-nowrap text-sm p-2">
                                     {{ number_format($order->amount, 2) }}
                                 </td>
+                                <td class="whitespace-nowrap p-3 text-sm">
+                                    <!-- Added x-data to ensure each dropdown has its own state -->
+                                    <div x-data="{ menuOpen: false }" wire:ignore class="flex items-center justify-end">
+                                        
+                                        <!-- Alpine.js menu component -->
+                                        <x-menu>
+                                            <!-- Button to toggle the menu -->
+                                            <x-menu.button class="hover:bg-gray-400 rounded">
+                                                <x-icon.ellipsis-horizontal /> <!-- Icon inside button -->
+                                            </x-menu.button>
+                                
+                                            <!-- Menu items that show when menuOpen is true -->
+                                            <x-menu.items>
+                                                <x-menu.item wire:click="refund({{ $order->id }})">
+                                                    Refund
+                                                </x-menu.item>
+                                                <x-menu.item>
+                                                    Another Action
+                                                </x-menu.item>
+                                                <x-menu.item>
+                                                    Third Action
+                                                </x-menu.item>
+                                            </x-menu.items>
+                                        </x-menu>
+                                
+                                    </div>
+                                </td>
+                                
+                                
                             </tr>
                         @endforeach
                     @endif
