@@ -32,6 +32,20 @@ class Page extends Component
         $this->resetPage();
     }
 
+    public function refund(Order $order)
+    {
+        $this->authorize('update', $order);
+
+        $order->refund();
+    }
+
+    public function archive(Order $order)
+    {
+        $this->authorize('update', $order);
+
+        $order->archive();
+    }
+    
     public function sortBy($column)
     {
         //Checks if sorted column is the same as the clicked column

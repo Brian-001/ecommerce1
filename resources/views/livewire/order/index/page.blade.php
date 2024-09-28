@@ -111,21 +111,31 @@
                                 
                                             <!-- Menu items that show when menuOpen is true -->
                                             <x-menu.items>
-                                                <x-menu.item wire:click="refund({{ $order->id }})">
-                                                    Refund
-                                                </x-menu.item>
-                                                <x-menu.item>
-                                                    Another Action
-                                                </x-menu.item>
-                                                <x-menu.item>
-                                                    Third Action
-                                                </x-menu.item>
+                                                <div class="flex justify-between items-center p-2">
+                                                    <span class="font-bold">Actions</span>
+                                
+                                                    <!-- Replace x-circle icon with inline SVG for testing -->
+                                                    <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 cursor-pointer hover:text-red-500" x-on:click="menuOpen = false" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                                                    </svg>
+                                                </div>
+                                                <x-menu.close>
+                                                    <x-menu.item wire:click="refund({{ $order->id }})"
+                                                        wire:confirm="Are you sure you want to refund?">
+                                                        Refund
+                                                    </x-menu.item>
+                                                </x-menu.close>
+                                                <x-menu.close>
+                                                    <x-menu.item wire:click="archive({{ $order->id }})"
+                                                        wire:confirm="Are you sure you want to archive?">
+                                                        Archive
+                                                    </x-menu.item>
+                                                </x-menu.close>
                                             </x-menu.items>
                                         </x-menu>
                                 
                                     </div>
-                                </td>
-                                
+                                </td>  
                                 
                             </tr>
                         @endforeach

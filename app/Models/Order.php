@@ -16,6 +16,20 @@ class Order extends Model
 
     protected $fillable = ['id', 'number', 'email', 'amount', 'status', 'ordered_at', 'product_id', 'store_id'];
 
+    //Added Refund method
+    public function refund()
+    {
+        $this->status = 'refunded'; // Update status
+        $this->save(); // Save to the database
+    }
+
+    //Added Archive method
+    public function archive()
+    {
+        $this->status = 'archived';
+        $this->save();
+    }
+
     //Added an accessor for ordered_at attribute
     public function getOrderedAtAttribute($value)
     {
