@@ -1,13 +1,24 @@
 <!-- Single root element -->
 <div class="flex flex-col gap-8 mt-10"> 
-    <!-- Search Bar -->
-    <div class="relative text-sm text-gray-800 mb-4 mx-auto w-full max-w-lg"> <!-- Centered search bar -->
-        <div class="absolute pl-2 left-0 top-0 bottom-0 flex items-center justify-center">
-            <x-icon.magnifying-glass class="w-4 h-4 text-gray-800" />
+    <!-- Search Bar and Export Button Container aligned to the table width -->
+    <div class="mx-auto flex justify-between items-center mb-4 gap-20"> <!-- Same width as the table -->
+        <!-- Search Bar -->
+        <div class="relative text-sm text-gray-800 w-full"> <!-- Left-aligned search bar -->
+            <div class="absolute pl-2 left-0 top-0 bottom-0 flex items-center justify-center">
+                <x-icon.magnifying-glass class="w-4 h-4 text-gray-800" />
+            </div>
+            <input wire:model.live.debounce.500ms="search" type="text" placeholder="Search email or order #..." class="pl-8 p-2 border rounded-md w-full" />
         </div>
-        {{-- .live searches as the user types and debounce determines the duration when the user stops typing and the searches --}}
-        <input wire:model.live.debounce.500ms="search" type="text" placeholder="Search email or order #..." class="pl-8 p-2 border rounded-md w-1/2" />
+        
+        <!-- Export Button -->
+        <div class="flex gap-2 justify-end">
+            <button class="flex items-center gap-2 rounded-lg border px-3 py-1.5">
+                <x-icon.arrow-down-tray />
+                Export
+            </button>
+        </div>
     </div>
+    
 
     <div class="flex flex-col justify-center align-center">
         <div class="relative">
