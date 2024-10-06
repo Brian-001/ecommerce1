@@ -4,16 +4,19 @@ namespace App\Livewire\Order\Index;
 
 use App\Models\Order;
 use App\Models\Store;
-use Livewire\Attributes\Url;
 use Livewire\Component;
-use Livewire\WithPagination;
-
 use function Livewire\store;
+use Livewire\Attributes\Url;
+
+use Livewire\WithPagination;
+use Livewire\Attributes\Renderless;
+use Spatie\SimpleExcel\SimpleExcelWriter;
 
 class Page extends Component
 {
     use WithPagination;
 
+    public $orders;
     public $storeId;
     public $search = ''; 
 
@@ -26,6 +29,27 @@ class Page extends Component
     {
         $this->storeId = $storeId;
     }
+
+    // #[Renderless]
+    public function exportToCsv()
+    {
+        //Fetch all orders
+        $orders->Order::all();
+        
+        SimpleExcelWriter::download($orders, 'orders.csv', function($excel)
+        {
+            //Define column headers
+            $excel->addRow(['order', 'status', 'customer', 'date', 'amount']);
+
+            //Add each order in a separate row in csv
+            foreach($orders as $order)
+            {
+                $excel->addRow([$order->number, $order->status, $order->email, $order->ordered_at, $order->amount]);
+            }
+        });
+        
+    }
+
     public function updatedSearch()
     {
         // Reset pagination to the first page when search changes

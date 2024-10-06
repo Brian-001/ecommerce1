@@ -71,3 +71,52 @@ public function updatedSearch()
     $this->resetPage();
 }
 ```
+
+## PseudoCode to implement CSV export
+Step 1: Install spatie simple excel package
+
+```php
+composer require spatie/simple-excel
+```
+Step 2: Create livewire component (Page.php)
+```php
+class Page extends Component{}
+```
+Step 3: Define export method
+```php
+public funtion exportToCsv()
+{
+    //Fetch all existing orders in the database
+    $orders = Oder::all();
+}
+```
+Step4: Use Spatie simple excel package to create Csv
+
+```php
+SimpleExcel::download($orders, 'orders.csv', function($excel)
+{
+    //Define column headers if needed
+    $excel->addRow(['order', 'status', 'customer', 'date', 'amount']);
+
+    //Add each order as a row in the csv
+    foreach($orders as $order)
+    {
+        $excel->addRow([$order->number, $order->status, $order->email, $order->ordered_at, $order->amount])
+    }
+
+});
+```
+
+Step 5: Render the view using render()
+```php
+public function render()
+{
+    return view('livewire.index')
+}
+```
+
+Step 6: Update component's corresponding view
+
+```html
+<button wire:click="exportToCsv"> Export Csv </button>
+```
