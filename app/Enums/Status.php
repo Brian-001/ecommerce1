@@ -25,30 +25,30 @@ enum Status: string
     }
 
 
-    // public function icon()
-    // {
-    //     return match ($this)
-    //     {
-    //         static::ARCHIVED => 'icon.heroicon-o-x-circle',
-    //         static::PAID => 'icon.check-circle',
-    //         static::UNPAID => 'icon.clock',
-    //         static::REFUNDED => 'icon.arrow-uturn-left',
-    //         static::FAILED => 'icon.heroicon-o-x-circle'
-    //     };
+    public function icon() : string
+    {
+        return match ($this)
+        {
+            static::ARCHIVED => 'icon.archive-box',
+            static::PAID => 'icon.check-circle',
+            static::UNPAID => 'icon.clock',
+            static::REFUNDED => 'icon.arrow-uturn-left',
+            static::FAILED => 'icon.heroicon-o-x-circle'
+        };
 
-    // }
+    }
 
-    // public function color()
-    // {
-    //     return match ($this)
-    //     {
-    //         static::ARCHIVED => 'gray',
-    //         static::PAID => 'green',
-    //         static::UNPAID => 'yellow',
-    //         static::REFUNDED => 'blue',
-    //         static::FAILED => 'red',
-    //     };
-    // }
+    public function color()
+    {
+        return match ($this)
+        {
+            static::ARCHIVED => 'gray',
+            static::PAID => 'green',
+            static::UNPAID => 'yellow',
+            static::REFUNDED => 'blue',
+            static::FAILED => 'red',
+        };
+    }
 
     
 }

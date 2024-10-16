@@ -15,8 +15,8 @@
         @livewireStyles
     </head>
     <body class="font-sans antialiased">
-        <main>
-            <div>
+        <main class="mx-auto flex justify-center p-8 lg:px-16">
+            <div class="py-12 w-full max-w-[50rem]">
                 {{ $slot }}
             </div>
         </main>        
