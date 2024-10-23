@@ -33,7 +33,7 @@ enum Status: string
             static::PAID => 'icon.check-circle',
             static::UNPAID => 'icon.clock',
             static::REFUNDED => 'icon.arrow-uturn-left',
-            static::FAILED => 'icon.heroicon-o-x-circle'
+            static::FAILED => 'icon.x-circle'
         };
 
     }

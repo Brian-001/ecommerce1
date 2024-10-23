@@ -120,3 +120,91 @@ Step 6: Update component's corresponding view
 ```html
 <button wire:click="exportToCsv"> Export Csv </button>
 ```
+
+## Working with dynamic class names in blade templates using Tailwindcss
+To work with dynamic classes or coditional classes that might not be detectable during tailwindcss purge process you use `safelist`.
+
+`Safelist` in `tailwind.config.js` is where you can specify class names to be included in your final build even if they are not found in template files.
+
+For instance we have a `Status.php` enum.
+
+```php
+<?php
+
+namespace App\Enums;
+
+
+enum Status: string
+{
+    //
+    case ARCHIVED = 'archived';
+    case PAID = 'paid';
+    case UNPAID = 'unpaid';
+    case REFUNDED = 'refunded';
+    case FAILED = 'failed';
+
+    public function label() : string
+    {
+        return match ($this)
+        {
+            static::ARCHIVED => 'Archived',
+            static::PAID => 'Paid',
+            static::UNPAID => 'Unpaid',
+            static::REFUNDED => 'Refunded',
+            static::FAILED => 'Failed',
+        };
+    }
+
+
+    public function icon() : string
+    {
+        return match ($this)
+        {
+            static::ARCHIVED => 'icon.archive-box',
+            static::PAID => 'icon.check-circle',
+            static::UNPAID => 'icon.clock',
+            static::REFUNDED => 'icon.arrow-uturn-left',
+            static::FAILED => 'icon.x-circle'
+        };
+
+    }
+
+    public function color()
+    {
+        return match ($this)
+        {
+            static::ARCHIVED => 'gray',
+            static::PAID => 'green',
+            static::UNPAID => 'yellow',
+            static::REFUNDED => 'blue',
+            static::FAILED => 'red',
+        };
+    }
+
+    
+}
+
+```
+In here, we have an enum defining various statuses, each with specific methods.
+
+>`label()` returns a human-readable label for each status.
+
+>`icon()` returns a corresponding icon component for each status.
+
+>`color()` returns corresponding color used in tailwind classes for each status. 
+
+```php
+<div class="rounded-full py-0.5 pl-2 pr-1 inline-flex font-medium items-center gap-1 text-{{ $order->status->color() }}-600 bg-{{ $order->status->color() }}-100">
+    <div>{{ $order->status->label() }}</div>
+    @if(View::exists('components.' . $order->status->icon()))
+        <x-dynamic-component :component="$order->status->icon()" />
+    @else
+        <span>Icon Missing</span> <!-- Fallback content -->
+    @endif
+</div>
+```
+So, in the above blade file instead of having multiple `@if` statements the above refactored code uses `color()` from `Status.php` enum to construct class names dynamically. This makes code much more cleaner and more maintainable.
+
+`icon()` is used to determine icon component.
+
+`View::exists` function ensures icon component exists before rendering it. It als provides a fallback statement.
