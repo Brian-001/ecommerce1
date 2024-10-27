@@ -5,7 +5,7 @@
                 <div class="absolute pl-2 left-0 top-0 bottom-0 flex items-center pointer-events-none text-gray-500">
                     <x-icon.magnifying-glass />
                 </div>
-                <input wire:model.live.debounce.500ms="search" type="text" placeholder="#Search, Order, email.." class="block w-full rounded-lg border-0 py-1.5 pl-10
+                <input id="search" name="search" wire:model.live.debounce.500ms="search" type="text" placeholder="#Search, Order, email.." class="block w-full rounded-lg border-0 py-1.5 pl-10
                 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600">
             </div>
         </div>
@@ -14,19 +14,28 @@
                 <thead>
                     <tr>
                         <th class="p-3 text-left text-sm font-semibold text-gray-900">
-                            <div wire:click="sortBy('number')">Order #</div>
+                            <x-orders.index.sortable column="number" :$sortCol :$sortAsc>
+                                <div >Order #</div>
+                            </x-orders.index.sortable>
                         </th>
                         <th class="p-3 text-left text-sm font-semibold text-gray-900">
-                            <div>Status</div>
+                            <x-orders.index.sortable column="status" :$sortCol :$sortAsc>
+                               <div>Status</div>
+                            </x-orders.index.sortable>
+                        </th>
                         </th>
                         <th class="p-3 text-left text-sm font-semibold text-gray-900">
                             <div>Customer</div>
                         </th>
                         <th class="p-3 text-left text-sm font-semibold text-gray-900">
-                            <div>Date</div>
+                            <x-orders.index.sortable column="date" :$sortCol :$sortAsc>
+                                <div>Date</div>
+                            </x-orders.index.sortable>
                         </th>
                         <th class="p-3 text-left text-sm font-semibold text-gray-900">
-                            <div>Amount</div>
+                            <x-orders.index.sortable column="amount" :$sortCol :$sortAsc>
+                                <div>Amount</div>
+                            </x-orders.index.sortable>
                         </th>
                     </tr>
                 </thead>

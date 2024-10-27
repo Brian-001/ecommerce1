@@ -6,6 +6,7 @@ use App\Models\Order;
 use App\Models\Store;
 use Livewire\Component;
 use Illuminate\Support\Facades\Log;
+use Livewire\Attributes\Url;
 use Livewire\WithPagination;
 
 class Page extends Component
@@ -16,8 +17,10 @@ class Page extends Component
 
     public $search = '';
 
+    #[Url] 
     public $sortCol;
 
+    #[Url] 
     public $sortAsc = false;
 
 
@@ -27,9 +30,16 @@ class Page extends Component
     }
     public function sortBy($column)
     {
-        $this->sortCol = $column;
+        if ($this->sortCol === $column)
+        {
+            $this->sortAsc = ! $this->sortAsc;
+        } else{
+            $this->sortCol = $column;
+            $this->sortAsc = false;
+        }
+        
     }
-    
+
     protected function applySorting($query)
     {
         //Get a value out of sortCol
@@ -67,12 +77,13 @@ class Page extends Component
     {
         
         //Initialize the query based on whether the store is set
-        if($this->store)
-        {
-            $query = $this->store->orders();
-        } else{
-            $query = Order::query();
-        }
+        // if($this->store)
+        // {
+        //     $query = $this->store->orders();
+        // } else{
+        //     $query = Order::query();
+        // }
+        $query = $this->store ? $this->store->orders() : Order::query();
 
         //Apply Search filter
         $query = $this->applySearch($query);
