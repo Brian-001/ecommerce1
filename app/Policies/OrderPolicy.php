@@ -14,7 +14,7 @@ class OrderPolicy
      */
     public function update(User $user, Order $order): bool
     {
-        //
+        //Orders belong to specific stores which then belong to specific user_id
         return $user->id === $order->store->user_id;
     }
 

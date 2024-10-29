@@ -5,9 +5,10 @@ namespace App\Livewire\Order\Index;
 use App\Models\Order;
 use App\Models\Store;
 use Livewire\Component;
-use Illuminate\Support\Facades\Log;
 use Livewire\Attributes\Url;
 use Livewire\WithPagination;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Response;
 
 class Page extends Component
 {
@@ -28,6 +29,54 @@ class Page extends Component
     {
         $this->resetPage();
     }
+
+    public function export()
+    {
+        $orders = $this->store ? $this->store->orders()->get() : Order::all();
+        $csv = $this->convertToCsv($orders);
+        
+        return Response::streamDownload(function () use ($csv) {
+            echo $csv;
+        }, 'orders.csv');
+    }
+
+    private function convertToCsv($orders)
+    {
+        //Initializes an empty string to csvData
+        $csvData = '';
+        //Create an array header containing column names for csv data
+        $headers = ['Number', 'Email', 'Amount', 'Status', 'Ordered At'];
+
+        //Concatenates header into a single seperated string
+        //implode(',', $headers) converts the array to csv header row and results is appended to csvData
+        $csvData .= implode(',', $headers) . "\n";
+        
+        //Iterates $order in  $orders collection
+        foreach ($orders as $order) {
+            $csvData .= implode(',', [
+                $order->number,
+                $order->email,
+                number_format($order->amount, 2),
+                $order->status->label(),
+                $order->ordered_at,
+            ]) . "\n";
+        }
+        //csvData string is returned from the function
+        return $csvData;
+    }
+
+    public function refund(Order $order)
+    {
+        // $this->authorize('update', $order);
+        $order->refund();
+    }
+
+    public function archive(Order $order)
+    {
+        // $this->authorize('update', $order);
+        $order->archive();
+    }
+
     public function sortBy($column)
     {
         if ($this->sortCol === $column)
