@@ -9,6 +9,7 @@ use Livewire\Attributes\Url;
 use Livewire\WithPagination;
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Response;
+use Livewire\Attributes\Renderless;
 
 class Page extends Component
 {
@@ -30,8 +31,12 @@ class Page extends Component
         $this->resetPage();
     }
 
+    // Renderless helps when export method is called it doesn't render in render(), 
+    // download happens immediately
+    #[Renderless]
     public function export()
     {
+        sleep(1);
         $orders = $this->store ? $this->store->orders()->get() : Order::all();
         $csv = $this->convertToCsv($orders);
         

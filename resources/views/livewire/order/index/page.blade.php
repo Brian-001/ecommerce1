@@ -10,9 +10,10 @@
             </div>
             <div class="flex gap-2 justify-end">
                 <div class="flex">
-                    <form wire:submit="export">
-                        <button type="submit" class="flex items-center gap-2 rounded-lg bg-gray-200 hover:bg-gray-900 hover:text-white py-2 px-4">
-                            <x-icon.arrow-down-tray/>
+                    <form wire:submit="export" class="group">
+                        <button type="submit" class="flex items-center gap-2 rounded-lg bg-gray-200 hover:bg-gray-900 group-hover:text-white py-2 px-4">
+                            <x-icon.arrow-down-tray wire:loading.remove wire:target="export"/>
+                            <x-icon.spinner wire:loading wire:target="export" class="text-gray-700 group-hover:text-white w-5 h-5"/>
                             Export
                         </button>
                     </form>
@@ -114,8 +115,8 @@
                     @endforeach
                 </tbody>
             </table>
-            <div wire:loading class="absolute inset-0 bg-white opacity-50"></div>
-            <div wire:loading.flex class="flex items-center justify-center absolute inset-0 ">
+            <div wire:loading wire:target="sortBy, search, nextPage, previousPage" class="absolute inset-0 bg-white opacity-50"></div>
+            <div wire:loading.flex wire:target="sortBy, search, nextPage, previousPage" class="flex items-center justify-center absolute inset-0 ">
                 <x-icon.spinner class="h-10 w-10"/>
             </div>
         </div>
