@@ -9,9 +9,25 @@
                 text-gray-900 ring-1 ring-inset ring-gray-200 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-slate-600">
             </div>
             <div class="flex gap-2 justify-end">
+                <div class="flex gap-2" x-show="$wire.selectedOrderIds.length > 0" x-cloak>
+                    <div class="flex items-center gap-1 text-sm text-gray-600">
+                        <span x-text="$wire.selectedOrderIds.length"></span>
+                        <span>selected</span>
+                    </div>
+                    <div class="flex items-center px-3">
+                        <div class="h-[75%] w-[1px] bg-gray-300"></div>
+                    </div>
+                    <form wire:submit="archiveMultiple">
+                        <button type="submit" class="flex items-center gap-2 rounded-lg border px-3 py-1.5 hover:bg-gray-100">
+                            <x-icon.archive-box wire:loading.remove wire:target="archive"/>
+                            <x-icon.spinner wire:loading wire:target="archive" class="text-gray-700" />
+                            Archive
+                        </button>
+                    </form>
+                </div>
                 <div class="flex">
                     <form wire:submit="export" class="group">
-                        <button type="submit" class="flex items-center gap-2 rounded-lg bg-gray-200 hover:bg-gray-900 group-hover:text-white py-2 px-4">
+                        <button type="submit" class="flex items-center gap-2 rounded-lg bg-gray-200 hover:bg-gray-900 group-hover:text-white py-1.5 px-3">
                             <x-icon.arrow-down-tray wire:loading.remove wire:target="export"/>
                             <x-icon.spinner wire:loading wire:target="export" class="text-gray-700 group-hover:text-white w-5 h-5"/>
                             Export
@@ -24,6 +40,9 @@
             <table class="min-w-full table-fixed divide-y divide-gray-300 text-gray-800">
                 <thead>
                     <tr>
+                        <th>
+                            {{-- Checkboxes --}}
+                        </th>
                         <th class="p-3 text-left text-sm font-semibold text-gray-900">
                             <x-orders.index.sortable column="number" :$sortCol :$sortAsc>
                                 <div >Order #</div>
@@ -56,7 +75,12 @@
                 <tbody class="divide-y divide-gray-200 bg-white text-gray-700">
                     @foreach ($orders as $order )
                         <tr wire:key="{{$order->id}}">
-                            <td class="whitespace-nowrap p3 text-sm">
+                            <td class="whitespace-nowrap p-3 text-sm">               
+                                <div class="flex items-center">
+                                    <input wire:model="selectedOrderIds" type="checkbox" value="{{$order->id}}" class="rounded border-gray-300 shadow">
+                                </div>
+                            </td>
+                            <td class="whitespace-nowrap p-3 text-sm">
                                 <div class="flex gap-1">
                                     <span class="text-gray-300">#</span>
                                     {{$order->number}}

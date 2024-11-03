@@ -25,10 +25,22 @@ class Page extends Component
     #[Url] 
     public $sortAsc = false;
 
+    public $selectedOrderIds = [];
 
     public function updatedSearch()
     {
         $this->resetPage();
+    }
+
+    public function archiveMultiple()
+    {
+        //Get eloquent collection for orderIds
+        $orders = $this->store->orders()->whereIn('id', $this->selectedOrderIds);
+
+        foreach ($orders as $order)
+        {
+            $this->archive($order);
+        }
     }
 
     // Renderless helps when export method is called it doesn't render in render(), 
@@ -36,7 +48,7 @@ class Page extends Component
     #[Renderless]
     public function export()
     {
-        sleep(1);
+        // sleep(1);
         $orders = $this->store ? $this->store->orders()->get() : Order::all();
         $csv = $this->convertToCsv($orders);
         
